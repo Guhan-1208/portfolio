@@ -29,6 +29,13 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- Netlify Forms registration (hidden, required for bot to detect form) -->
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

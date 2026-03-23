@@ -567,10 +567,14 @@ function Contact() {
     e.preventDefault();
     setStatus("sending");
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const body = new URLSearchParams({
+        "form-name": "contact",
+        ...form,
+      }).toString();
+      const res = await fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ access_key: "91e86fe4-c80d-4c31-93d0-f205f1a5721a", ...form }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
       });
       if (res.ok) { setStatus("sent"); setForm({ name: "", email: "", message: "" }); }
       else setStatus("error");
@@ -598,7 +602,9 @@ function Contact() {
         }}>
           <div style={{ position: "absolute", top: "-1px", left: "3rem", right: "3rem", height: "2px", background: "linear-gradient(90deg, transparent, #00d4ff, transparent)" }} />
 
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          <form onSubmit={handleSubmit} name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <input type="hidden" name="form-name" value="contact" />
+            <p style={{ display: "none" }}><input name="bot-field" /></p>
             {[
               { id: "name", label: "Name", type: "text", placeholder: "Your full name" },
               { id: "email", label: "Email", type: "email", placeholder: "your.email@example.com" },
